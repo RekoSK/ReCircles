@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#16100d">
+  <meta name="description" content="ReCircles is a radial launcher for Linux on Wayland. Open files and apps, switch windows, and manage Wi-Fi and Bluetooth right at your cursor.">
+  <title>ReCircles — A radial launcher for Wayland</title>
+  <link rel="icon" href="./favicon.png" type="image/png">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./script.js"></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="nav shell">
+      <a class="wordmark" href="#top"><span class="brand-mark" aria-hidden="true"></span>ReCircles</a>
+      <nav aria-label="Main navigation">
+        <a href="#preview">Preview</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#setup">Setup</a>
+      </nav>
+      <a class="button button-small button-quiet" href="#setup">Get ReCircles</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <h1 id="hero-title">What if it was <em>a circle?</em></h1>
+        <p class="intro">An innovative all-in-one radial launcher for quickly navigating between apps, folders, and windows. <span class="intro-highlight">Perfect if you want a smooth, modern dmenu for your WM.</span></p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#setup"><span class="terminal-icon" aria-hidden="true"></span>Get ReCircles</a>
+          <button class="button button-quiet" type="button" disabled>Docs</button>
+        </div>
+        <p class="platform">For Linux and Windows (planned) <span aria-hidden="true">/</span> Built in Rust</p>
+      </div>
+
+      <div class="main-ring" id="preview">
+        <div class="ring-crop">
+          <img width="1220" height="940" src="./screenshots/launcher.webp" alt="ReCircles main ring with Files, Applications, Alt-Tab, Wi-Fi, Bluetooth, and Settings.">
+        </div>
+      </div>
+    </section>
+
+    <section class="overview" id="how-it-works" aria-labelledby="features-title">
+      <div class="shell">
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2 id="features-title">Six tools <span class="heading-accent">within reach.</span></h2>
+        </div>
+        <dl class="mode-list">
+          <div class="mode" data-mode="files">
+            <dt><span class="mode-icon" data-icon="files" aria-hidden="true"></span>Files</dt>
+            <dd>Return to frequently opened folders or type a path to browse.</dd>
+          </div>
+          <div class="mode" data-mode="apps">
+            <dt><span class="mode-icon" data-icon="apps" aria-hidden="true"></span>Applications</dt>
+            <dd>Find installed apps. The ones you launch most rise to the top.</dd>
+          </div>
+          <div class="mode" data-mode="windows">
+            <dt><span class="mode-icon" data-icon="windows" aria-hidden="true"></span>Alt-Tab</dt>
+            <dd>Search open windows across workspaces by title or app ID.</dd>
+          </div>
+          <div class="mode" data-mode="wifi">
+            <dt><span class="mode-icon" data-icon="wifi" aria-hidden="true"></span>Wi-Fi</dt>
+            <dd>Join nearby networks, rescan, or manage saved profiles.</dd>
+          </div>
+          <div class="mode" data-mode="bluetooth">
+            <dt><span class="mode-icon" data-icon="bluetooth" aria-hidden="true"></span>Bluetooth</dt>
+            <dd>Discover, pair, and manage devices from the ring.</dd>
+          </div>
+          <div class="mode" data-mode="settings">
+            <dt><span class="mode-icon" data-icon="settings" aria-hidden="true"></span>Settings</dt>
+            <dd>Change appearance, colors, keybinds, and the main menu from the app.</dd>
+          </div>
+          <div class="mode mode-custom">
+            <dt><span class="mode-icon" data-icon="custom" aria-hidden="true"></span>Or create your own!</dt>
+            <dd>Build a custom menu for your own commands with a JSON file.</dd>
+          </div>
+        </dl>
+
+        <div class="layout-feature">
+          <div class="layout-copy">
+            <h3>A menu that <span class="heading-accent">fits.</span></h3>
+            <p>Up to eight results stay in a ring. Larger menus unfold into a four-column grid. As you type and narrow the results, the icons move back into place.</p>
+            <p><span class="intro-highlight">Smooth animations and fast response time are a priority.</span></p>
+          </div>
+          <div class="layout-demo" aria-label="Search and layout demo">
+            <label class="search-box">
+              <span class="search-icon" aria-hidden="true"></span>
+              <span class="sr-only">Search sample applications</span>
+              <input id="app-search" type="search" placeholder="Try searching for “file”" autocomplete="off" disabled>
+            </label>
+            <div class="layout-field" id="layout-field">
+              <div class="layout-ring" aria-hidden="true"></div>
+              <ul class="layout-results" id="layout-results" aria-label="Sample applications"></ul>
+              <p class="no-results" id="no-results" hidden>No matching apps.</p>
+              <noscript><p class="no-script">Enable JavaScript to try searching.</p></noscript>
+            </div>
+            <p class="layout-status" id="layout-status" role="status">Sample applications</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="setup shell" id="setup" aria-labelledby="setup-title">
+      <div class="section-heading">
+        <p class="eyebrow">Setup</p>
+        <h2 id="setup-title"><span class="heading-accent">Get</span> ReCircles.</h2>
+        <p>Build and run it from the ReCircles source directory, then bind <code>recircles</code> to a shortcut in your compositor.</p>
+      </div>
+      <div class="setup-detail">
+        <div class="code-block">
+          <div class="code-header">
+            <span><span class="terminal-icon" aria-hidden="true"></span>In the project directory</span>
+            <button type="button" class="copy-button" id="copy-install" hidden>Copy commands</button>
+          </div>
+          <pre><code id="install-commands">cargo install --locked --path .
+recircles</code></pre>
+          <span class="sr-only" role="status" id="copy-status"></span>
+        </div>
+        <details>
+          <summary>System requirements</summary>
+          <ul>
+            <li>A Wayland compositor with layer-shell support. Alt-Tab also needs the foreign-toplevel protocol.</li>
+            <li>Rust 1.89 or later, Cargo, pkg-config, and development files for GTK 3, gtk-layer-shell 0.6 or later, and libwayland-client.</li>
+            <li>On Arch Linux, the native dependencies are <code>gtk3</code>, <code>gtk-layer-shell</code>, <code>wayland</code>, and <code>pkgconf</code>.</li>
+            <li>Wi-Fi uses NetworkManager (<code>nmcli</code>). Bluetooth uses BlueZ (<code>bluetoothctl</code>).</li>
+          </ul>
+        </details>
+        <details>
+          <summary>Customize your ring</summary>
+          <p>Open <strong>Settings</strong> from the main ring or run <code>recircles --run settings</code>. Edit the appearance, pick colors, capture keybinds, or reorder and rename menu items. Changes take effect immediately and save to <code>~/.config/recircles/recircles.json</code> by default.</p>
+          <p>Add JSON menus for your own commands and open them with <code>recircles --run &lt;name&gt;</code>.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-content">
+      <p>© 2026 Andrej "Reko" Revák · recircles.rekosk.dev</p>
+      <a href="#top">Back to top</a>
+    </div>
+  </footer>
+</body>
+</html>
