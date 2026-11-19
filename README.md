@@ -1,6 +1,6 @@
 # ReCircles
 
-ReCircles is a native Rust launcher for Wayland. Run `recircles` to open a translucent ring around the pointer. Click a sector to open Files, Applications, Alt-Tab, Wi-Fi, or Bluetooth. [**Visit website for more information.](https://recircles.rekosk.dev)**
+ReCircles is a native Rust launcher for Wayland. Run `recircles` to open a translucent ring around the pointer. Click a sector to open Files, Applications, Alt-Tab, Wi-Fi, or Bluetooth. [Visit website for more information.](https://recircles.rekosk.dev)
 
 ## Build and run
 
