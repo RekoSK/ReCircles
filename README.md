@@ -15,7 +15,7 @@ Cargo installs to `~/.cargo/bin` by default. You can also run the project direct
 
 ## Documentation
 
-Full docs which contain how to create your own themes, how to use the config file or how to create own menus are available [here](recircles.rekosk.dev/docs).
+Full docs which contain how to create your own themes, how to use the config file or how to create own menus are available [here](docs.rekosk.dev/recircles).
 
 ## License
 
