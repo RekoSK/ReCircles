@@ -109,7 +109,8 @@ svg, canvas { display: block; }
 }
 .button-primary:hover { background: #ffb27e; }
 .button-quiet { border-color: #ffcead42; background: #fff3e908; }
-.button-quiet:hover { border-color: #ffcead76; background: #fff3e914; }
+.button-quiet:hover:not(:disabled) { border-color: #ffcead76; background: #fff3e914; }
+.button:disabled { color: var(--dim); cursor: default; }
 .github-icon { flex: 0 0 auto; }
 
 .terminal-icon {
@@ -250,14 +251,9 @@ kbd {
 .mode-custom { grid-column: 1 / -1; }
 .mode-custom dt { display: flex; align-items: center; }
 .mode-custom .mode-icon { flex: 0 0 auto; }
-.mode-custom dd {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: .65rem;
-  margin-inline-start: 3.25rem;
-}
-.mode-custom dd .button { color: var(--paper); }
+.mode-custom dd { margin-inline-start: 3.25rem; }
+.mode-custom .mode-custom-action { margin-block-start: .65rem; }
+.mode-custom-action .button { color: var(--paper); }
 .layout-feature {
   display: grid;
   grid-template-columns: minmax(0, .79fr) minmax(0, 1.21fr);
@@ -372,7 +368,9 @@ kbd {
   padding-block: clamp(3.5rem, 7.8vw, 7rem);
 }
 .setup-detail { min-width: 0; }
-.setup .section-heading a { color: var(--orange); text-decoration: underline; text-underline-offset: .17em; }
+.setup .section-heading p a { color: var(--orange); text-decoration: underline; text-underline-offset: .17em; }
+.build-downloads { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .65rem; }
+.build-downloads svg { flex: 0 0 auto; }
 .code-block {
   border: 1px solid #ffcbaa40;
   border-radius: 1.05rem;
