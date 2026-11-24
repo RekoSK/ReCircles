@@ -10,6 +10,7 @@ const icons = {
   windows: ['#ff7a57', 'M7.5 6V4.5Q7.5 3 9 3H19.5Q21 3 21 4.5V14Q21 15.5 19.5 15.5H18M3 11H16.5M4.5 7.5H15Q16.5 7.5 16.5 9V19.5Q16.5 21 15 21H4.5Q3 21 3 19.5V9Q3 7.5 4.5 7.5Z'],
   wifi: ['#5cd6b3', 'M2.5 8.5Q12 1 21.5 8.5M5.5 12Q12 6.8 18.5 12M8.5 15.5Q12 12.7 15.5 15.5M12 19H12.01'],
   bluetooth: ['#6ba8ff', 'M6 6.5 17.5 17 12 22V2L17.5 7 6 17.5'],
+  clipboard: ['#5cd6b3', 'M8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M8 4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2H8ZM8 11h8m-8 4h8'],
   terminal: ['#eea1a5', 'M4 4H20Q21 4 21 5V19Q21 20 20 20H4Q3 20 3 19V5Q3 4 4 4ZM7 9 10 12 7 15M13 15H17'],
   web: ['#8abbff', 'M22 12A10 10 0 1 1 2 12 10 10 0 0 1 22 12ZM2 12H22M12 2C6 8 6 16 12 22M12 2C18 8 18 16 12 22'],
   text: ['#ffd494', 'M5 2.5H14L19 7.5V20Q19 21.5 17.5 21.5H6.5Q5 21.5 5 20ZM14 2.5V7.5H19M8.5 12H15.5M8.5 16H15.5'],
@@ -36,6 +37,24 @@ function createIcon(name) {
 
 document.querySelectorAll('[data-icon]').forEach(element => {
   element.append(createIcon(element.dataset.icon));
+});
+
+const platformSwitch = document.querySelector('#platform-switch');
+const platformChoices = platformSwitch.querySelectorAll('input');
+const platformContent = document.querySelectorAll('[data-platform-content]');
+const platformFeatures = document.querySelector('#platform-features');
+
+function selectPlatform(platform) {
+  platformChoices.forEach(choice => { choice.checked = choice.value === platform; });
+  platformContent.forEach(section => { section.hidden = section.dataset.platformContent !== platform; });
+  platformFeatures.dataset.platform = platform;
+}
+
+const browserPlatform = navigator.userAgentData?.platform || navigator.platform;
+selectPlatform(/^win/i.test(browserPlatform) ? 'windows' : 'linux');
+platformSwitch.hidden = false;
+platformSwitch.addEventListener('change', event => {
+  selectPlatform(event.target.value);
 });
 
 // Retarget the value and velocity already on screen, even mid-transition.
@@ -200,28 +219,81 @@ search.addEventListener('keydown', event => {
   }
 });
 
-const copyButton = document.querySelector('#copy-install');
-const installCommands = document.querySelector('#install-commands');
-const copyStatus = document.querySelector('#copy-status');
-let resetCopy;
-copyButton.hidden = false;
-copyButton.addEventListener('click', async () => {
-  let copied = false;
+const windowsDownload = document.querySelector('#windows-download');
+const windowsStatus = document.querySelector('#windows-download-status');
+const windowsReleases = 'https://api.github.com/repos/RekoSK/ReCircles-windows/releases';
+let checkingWindowsRelease = false;
+
+windowsDownload.addEventListener('click', async event => {
+  if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  event.preventDefault();
+  if (checkingWindowsRelease) return;
+
+  checkingWindowsRelease = true;
+  windowsStatus.hidden = false;
+  windowsStatus.textContent = 'Checking for the newest Windows installer…';
+
+  let downloadUrl = windowsDownload.href;
   try {
-    await navigator.clipboard.writeText(installCommands.textContent);
-    copied = true;
+    const signal = AbortSignal.timeout(5000);
+    const stableResponse = await fetch(`${windowsReleases}/latest`, { signal });
+    let releases;
+    if (stableResponse.ok) {
+      releases = [await stableResponse.json()];
+    } else if (stableResponse.status === 404) {
+      // A missing stable release is the only reason to consider prereleases.
+      const betaResponse = await fetch(windowsReleases, { signal });
+      if (!betaResponse.ok) throw new Error('GitHub prerelease lookup failed');
+
+      releases = (await betaResponse.json())
+        .filter(release => release.prerelease && !release.draft && release.published_at)
+        .sort((a, b) => Date.parse(b.published_at) - Date.parse(a.published_at));
+    } else {
+      throw new Error('GitHub stable release lookup failed');
+    }
+
+    const installer = releases
+      .flatMap(release => release.assets)
+      .find(asset => asset.state === 'uploaded'
+        && /^recircles-setup(?:-[\w.-]+)?\.exe$/i.test(asset.name)
+        && asset.browser_download_url.startsWith('https://github.com/RekoSK/ReCircles-windows/releases/download/'));
+    if (!installer) throw new Error('No Windows installer found');
+
+    downloadUrl = installer.browser_download_url;
+    windowsStatus.hidden = true;
   } catch {
-    const range = document.createRange();
-    range.selectNodeContents(installCommands);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    copied = document.execCommand('copy');
-    if (copied) selection.removeAllRanges();
+    windowsStatus.textContent = 'Opening the Windows releases page…';
+  } finally {
+    checkingWindowsRelease = false;
   }
 
-  copyButton.textContent = copied ? 'Copied' : 'Commands selected';
-  copyStatus.textContent = copied ? 'Install commands copied.' : 'Commands selected. Use your copy shortcut.';
-  clearTimeout(resetCopy);
-  resetCopy = setTimeout(() => { copyButton.textContent = 'Copy commands'; }, 2300);
+  window.location.assign(downloadUrl);
+});
+
+document.querySelectorAll('[data-copy-commands]').forEach(copyButton => {
+  const block = copyButton.closest('.code-block');
+  const installCommands = block.querySelector('code');
+  const copyStatus = block.querySelector('[role="status"]');
+  let resetCopy;
+  copyButton.hidden = false;
+  copyButton.addEventListener('click', async () => {
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(installCommands.textContent);
+      copied = true;
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(installCommands);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      copied = document.execCommand('copy');
+      if (copied) selection.removeAllRanges();
+    }
+
+    copyButton.textContent = copied ? 'Copied' : 'Commands selected';
+    copyStatus.textContent = copied ? 'Commands copied.' : 'Commands selected. Use your copy shortcut.';
+    clearTimeout(resetCopy);
+    resetCopy = setTimeout(() => { copyButton.textContent = 'Copy commands'; }, 2300);
+  });
 });

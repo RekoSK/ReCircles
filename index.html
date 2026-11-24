@@ -28,7 +28,7 @@
     <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy">
         <h1 id="hero-title">What if it was <em>a circle?</em></h1>
-        <p class="intro">An innovative all-in-one radial launcher for quickly navigating between apps, folders, and windows. <span class="intro-highlight">Perfect if you want a smooth, modern dmenu for your WM.</span></p>
+        <p class="intro">An innovative all-in-one radial launcher for quickly navigating between apps, folders, and windows. <span class="intro-highlight" data-platform-content="linux">Perfect if you want a smooth, modern dmenu for your WM.</span><span class="intro-highlight" data-platform-content="windows" hidden>Perfect if you want your menu smooth and fast.</span></p>
         <div class="hero-actions">
           <a class="button button-primary" href="#setup"><span class="terminal-icon" aria-hidden="true"></span>Get ReCircles</a>
           <a class="button button-quiet" href="https://github.com/RekoSK/ReCircles">
@@ -38,7 +38,7 @@
             GitHub <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <p class="platform">For Linux and Windows (planned) <span aria-hidden="true">/</span> Built in Rust</p>
+        <p class="platform">For Linux and Windows <span aria-hidden="true">/</span> Built in Rust</p>
       </div>
 
       <div class="main-ring" id="preview">
@@ -52,32 +52,39 @@
       <div class="shell">
         <div class="section-heading">
           <p class="eyebrow">How it works</p>
-          <h2 id="features-title">Six tools <span class="heading-accent">within reach.</span></h2>
+          <h2 id="features-title"><span data-platform-content="linux">Six tools</span><span data-platform-content="windows" hidden>Five tools</span> <span class="heading-accent">within reach.</span></h2>
         </div>
-        <dl class="mode-list">
+        <dl class="mode-list" id="platform-features" data-platform="linux">
           <div class="mode" data-mode="files">
             <dt><span class="mode-icon" data-icon="files" aria-hidden="true"></span>Files</dt>
-            <dd>Return to frequently opened folders or type a path to browse.</dd>
+            <dd data-platform-content="linux">Return to frequently opened folders or type a path to browse.</dd>
+            <dd data-platform-content="windows" hidden>Browse drives and folders, and return to pinned or recent paths.</dd>
           </div>
           <div class="mode" data-mode="apps">
-            <dt><span class="mode-icon" data-icon="apps" aria-hidden="true"></span>Applications</dt>
+            <dt><span class="mode-icon" data-icon="apps" aria-hidden="true"></span><span data-platform-content="linux">Applications</span><span data-platform-content="windows" hidden>Apps</span></dt>
             <dd>Find installed apps. The ones you launch most rise to the top.</dd>
           </div>
           <div class="mode" data-mode="windows">
-            <dt><span class="mode-icon" data-icon="windows" aria-hidden="true"></span>Alt-Tab</dt>
-            <dd>Search open windows across workspaces by title or app ID.</dd>
+            <dt><span class="mode-icon" data-icon="windows" aria-hidden="true"></span><span data-platform-content="linux">Alt-Tab</span><span data-platform-content="windows" hidden>Windows</span></dt>
+            <dd data-platform-content="linux">Search open windows across workspaces by title or app ID.</dd>
+            <dd data-platform-content="windows" hidden>Switch focus between open desktop windows from the ring.</dd>
           </div>
-          <div class="mode" data-mode="wifi">
+          <div class="mode" data-mode="wifi" data-platform-content="linux">
             <dt><span class="mode-icon" data-icon="wifi" aria-hidden="true"></span>Wi-Fi</dt>
             <dd>Join nearby networks, rescan, or manage saved profiles.</dd>
           </div>
-          <div class="mode" data-mode="bluetooth">
+          <div class="mode" data-mode="bluetooth" data-platform-content="linux">
             <dt><span class="mode-icon" data-icon="bluetooth" aria-hidden="true"></span>Bluetooth</dt>
             <dd>Discover, pair, and manage devices from the ring.</dd>
           </div>
+          <div class="mode" data-mode="clipboard" data-platform-content="windows" hidden>
+            <dt><span class="mode-icon" data-icon="clipboard" aria-hidden="true"></span>Clipboard</dt>
+            <dd>Find text, files, and images you’ve copied in your clipboard history.</dd>
+          </div>
           <div class="mode" data-mode="settings">
             <dt><span class="mode-icon" data-icon="settings" aria-hidden="true"></span>Settings</dt>
-            <dd>Change appearance, colors, keybinds, and the main menu from the app.</dd>
+            <dd data-platform-content="linux">Change appearance, colors, keybinds, and the main menu from the app.</dd>
+            <dd data-platform-content="windows" hidden>Change themes, global hotkeys, and the layout from the ring.</dd>
           </div>
           <div class="mode mode-custom">
             <dt><span class="mode-icon" data-icon="custom" aria-hidden="true"></span>Or create your own!</dt>
@@ -116,8 +123,10 @@
       <div class="section-heading">
         <p class="eyebrow">Setup</p>
         <h2 id="setup-title"><span class="heading-accent">Get</span> ReCircles.</h2>
-        <p>Clone the repository with the commands shown here, or choose <strong>Code</strong> then <strong>Download ZIP</strong> on <a href="https://github.com/RekoSK/ReCircles">GitHub</a>. If you download the ZIP, extract it and run the last two commands from the extracted folder. After installing, bind <code>recircles</code> to a shortcut in your compositor.</p>
-        <p><span class="intro-highlight">Or download the build version:</span></p>
+        <p data-platform-content="linux">Clone the repository with the commands shown here, or choose <strong>Code</strong> then <strong>Download ZIP</strong> on <a href="https://github.com/RekoSK/ReCircles">GitHub</a>. If you download the ZIP, extract it and run the last two commands from the extracted folder. After installing, bind <code>recircles</code> to a shortcut in your compositor.</p>
+        <p data-platform-content="windows" hidden>Download the Windows installer and choose which menus, theme, and shortcuts to use. The installer and source code are available on <a href="https://github.com/RekoSK/ReCircles-windows">GitHub</a>.</p>
+        <p data-platform-content="linux"><span class="intro-highlight">Or download the build version:</span></p>
+        <p data-platform-content="windows" hidden><span class="intro-highlight">Download ReCircles:</span></p>
         <div class="build-downloads">
           <a class="button button-small button-quiet" href="https://github.com/RekoSK/ReCircles/releases/latest/download/linux-x86_64.tar.gz">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -127,27 +136,33 @@
             </svg>
             Linux (x86-64)
           </a>
-          <button class="button button-small button-quiet" type="button" disabled>
+          <a class="button button-small button-quiet" id="windows-download" href="https://github.com/RekoSK/ReCircles-windows/releases">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
               <path d="M2 2h9v9H2zm11 0h9v9h-9zM2 13h9v9H2zm11 0h9v9h-9z"/>
             </svg>
-            Windows (Coming soon...)
-          </button>
+            Windows (x86-64)
+          </a>
         </div>
+        <p id="windows-download-status" role="status" hidden></p>
       </div>
       <div class="setup-detail">
-        <div class="code-block">
+        <fieldset class="platform-switch" id="platform-switch" hidden>
+          <legend class="sr-only">Platform for setup and built-in tools</legend>
+          <label><input class="sr-only" type="radio" name="site-platform" value="linux" checked><span>Linux</span></label>
+          <label><input class="sr-only" type="radio" name="site-platform" value="windows"><span>Windows</span></label>
+        </fieldset>
+        <div class="code-block" data-platform-content="linux">
           <div class="code-header">
             <span><span class="terminal-icon" aria-hidden="true"></span>Download and build from GitHub</span>
-            <button type="button" class="copy-button" id="copy-install" hidden>Copy commands</button>
+            <button type="button" class="copy-button" data-copy-commands hidden>Copy commands</button>
           </div>
-          <pre><code id="install-commands">git clone https://github.com/RekoSK/ReCircles.git
+          <pre><code>git clone https://github.com/RekoSK/ReCircles.git
 cd ReCircles
 cargo install --locked --path .
 recircles</code></pre>
-          <span class="sr-only" role="status" id="copy-status"></span>
+          <span class="sr-only" role="status"></span>
         </div>
-        <details>
+        <details data-platform-content="linux">
           <summary>System requirements</summary>
           <ul>
             <li>A Wayland compositor with layer-shell support. Alt-Tab also needs the foreign-toplevel protocol.</li>
@@ -156,11 +171,40 @@ recircles</code></pre>
             <li>Wi-Fi uses NetworkManager (<code>nmcli</code>). Bluetooth uses BlueZ (<code>bluetoothctl</code>).</li>
           </ul>
         </details>
-        <details>
+        <details data-platform-content="linux">
           <summary>Customize your ring</summary>
           <p>Open <strong>Settings</strong> from the main ring or run <code>recircles --run settings</code>. Edit the appearance, pick colors, capture keybinds, or reorder and rename menu items. Changes take effect immediately and save to <code>~/.config/recircles/recircles.json</code> by default.</p>
           <p>Add JSON menus for your own commands and open them with <code>recircles --run &lt;name&gt;</code>.</p>
         </details>
+        <div data-platform-content="windows" hidden>
+          <div class="code-block">
+            <h3 class="code-header"><span><span class="terminal-icon" aria-hidden="true"></span>Install on Windows</span></h3>
+            <ol class="install-steps">
+              <li>Choose <strong>Windows (x86-64)</strong> and open the downloaded <code>recircles-setup</code> installer.</li>
+              <li>Select the menus you want, then choose a theme and keyboard shortcuts.</li>
+              <li>Finish setup and press <kbd>Ctrl</kbd> + <kbd>Space</kbd> to open the ring, or use the shortcut you chose.</li>
+            </ol>
+          </div>
+          <details>
+            <summary>Build from source</summary>
+            <p>Install the x86-64 Rust MSVC toolchain, Visual Studio 2022 C++ Build Tools, and a Windows SDK. Then run these commands in PowerShell.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span><span class="terminal-icon" aria-hidden="true"></span>Build the Windows installer</span>
+                <button type="button" class="copy-button" data-copy-commands hidden>Copy commands</button>
+              </div>
+              <pre><code>git clone https://github.com/RekoSK/ReCircles-windows.git
+cd ReCircles-windows
+.\build_windows.ps1</code></pre>
+              <span class="sr-only" role="status"></span>
+            </div>
+            <p>The installer is built at <code>target\dist\recircles-setup.exe</code>.</p>
+          </details>
+          <details>
+            <summary>Customize your ring</summary>
+            <p>Open <strong>Settings</strong> to edit themes, keybinds, and the main menu. The configuration file is stored at <code>%LOCALAPPDATA%\recircles\recircles.json</code>.</p>
+          </details>
+        </div>
       </div>
     </section>
   </main>

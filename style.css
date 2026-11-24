@@ -109,8 +109,7 @@ svg, canvas { display: block; }
 }
 .button-primary:hover { background: #ffb27e; }
 .button-quiet { border-color: #ffcead42; background: #fff3e908; }
-.button-quiet:hover:not(:disabled) { border-color: #ffcead76; background: #fff3e914; }
-.button:disabled { color: var(--dim); cursor: default; }
+.button-quiet:hover { border-color: #ffcead76; background: #fff3e914; }
 .github-icon { flex: 0 0 auto; }
 
 .terminal-icon {
@@ -227,10 +226,12 @@ kbd {
 .section-heading h2 { margin-top: .7rem; }
 .mode-list {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  --mode-columns: 6;
+  grid-template-columns: repeat(var(--mode-columns), minmax(0, 1fr));
   margin-top: 2.3rem;
   gap: .9rem;
 }
+.mode-list[data-platform="windows"] { --mode-columns: 5; }
 .mode {
   padding: 1.1rem;
   min-width: 0;
@@ -368,6 +369,36 @@ kbd {
   padding-block: clamp(3.5rem, 7.8vw, 7rem);
 }
 .setup-detail { min-width: 0; }
+.platform-switch {
+  display: inline-flex;
+  gap: .2rem;
+  min-inline-size: 0;
+  margin: 0 0 .8rem;
+  padding: .2rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #211510;
+}
+.platform-switch label span {
+  display: grid;
+  place-items: center;
+  min-height: 2.75rem;
+  padding-inline: 1rem;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 650;
+}
+.platform-switch label { border-radius: 999px; }
+.platform-switch input:checked + span {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: #241208;
+}
+.platform-switch input:focus-visible + span { outline: 2px solid #ffd19e; outline-offset: 3px; }
+.platform-switch input:not(:checked) + span:hover { color: var(--paper); }
 .setup .section-heading p a { color: var(--orange); text-decoration: underline; text-underline-offset: .17em; }
 .build-downloads { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: .65rem; }
 .build-downloads svg { flex: 0 0 auto; }
@@ -392,6 +423,13 @@ kbd {
   font-size: .85rem;
 }
 .code-header > span { display: inline-flex; align-items: center; gap: .5rem; }
+.install-steps {
+  margin: 0;
+  padding: .9rem 1rem .95rem 2.15rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.install-steps li + li { margin-top: .45rem; }
 .copy-button {
   padding: .35rem .54rem;
   min-height: 2.65rem;
